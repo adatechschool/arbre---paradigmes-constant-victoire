@@ -6,7 +6,8 @@
 </head>
 ​
 <body>
-    <p onclick="bonjour()"> Click me !</p>
+    <!-- Victoire -->
+    <p onclick="bonjour()"> Click me ! (Victoire)</p>
 
     <style>
 
@@ -22,6 +23,19 @@
             window.alert("Bonjour !")
             }
         }
+    </script>
+
+    <!-- Constant -->
+    <button>CLICK HERE!!!!!!!! (Constant)</button>
+    <script>
+        function helloName(){
+            alert(`Wesh ${prompt("Please, dear visitor, enter your name :")} !`);
+        }
+
+        const button = document.querySelector('button');
+        button.addEventListener('click', helloName);
+
+
     </script>
 
 </body>

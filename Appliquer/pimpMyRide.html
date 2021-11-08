@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8" />
+  ​
+  <head> </head>
+  ​
+  <body>
+    <style></style>
+    ​
+    <script>
+      // fonctions pour transformer les voyages en objets
+
+      function parseTrip(trip) {
+        trip = trip.split(" ");
+        let tr = {
+          client: trip[0],
+          start: trip[1],
+          duration: trip[2],
+          price: trip[3],
+        };
+        return tr;
+      }
+
+      function parseTrips(trips) {
+        let parsedTrips = [];
+        trips.forEach((str) => {
+          parsedTrips.push(parseTrip(str));
+        });
+        return parsedTrips;
+      }
+
+      let dayTrips = [
+        "Roger 0 5 10",
+        "Pongo 3 7 14",
+        "Perdita 8 10 8",
+        "Anita 16 3 7",
+      ];
+
+      let myTrips = parseTrips(dayTrips);
+
+      // obtenir les prix des voyages
+      function getTripsPrices(trips) {
+        let result = 0;
+        trips.forEach((trip) => {
+          result += parseInt(trip.price);
+        });
+        return result;
+      }
+
+      console.log(getTripsPrices(myTrips));
+    </script>
+  </body>
+</html>

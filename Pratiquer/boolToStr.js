@@ -8,3 +8,9 @@ function booleanToString(b){
     return "false"
     }
 }
+
+// La version de Constant :
+
+function booleanToString(b){
+  return b.toString();
+}

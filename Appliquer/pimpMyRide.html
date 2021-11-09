@@ -26,6 +26,9 @@
         trips.forEach((str) => {
           parsedTrips.push(parseTrip(str));
         });
+        parsedTrips.sort(function(a,b) {
+          return a.start - b.start
+        })
         return parsedTrips;
       }
 
@@ -60,10 +63,8 @@
         let compatibleTrips = []
         for (let i = 0; i < trips.length; i++) {
           compatibleTrips.push([trips[i]])
-        }
-        for (let i = 0; i < trips.length; i++) {
-          for (let j = 0; j < trips.length; j++) {
-            if ((i != j) && (checkCompatibility(trips[i], trips[j]) == true)) {
+          for (let j = i + 1; j < trips.length; j++) {
+            if (checkCompatibility(trips[i], trips[j]) == true) {
               compatibleTrips.push([trips[i], trips[j]])
             }
           }

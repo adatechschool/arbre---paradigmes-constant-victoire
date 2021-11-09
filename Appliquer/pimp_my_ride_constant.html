@@ -1,0 +1,97 @@
+<!-- Work in progress : ça marche...avec béquilles et contre-béquilles...si on évite les douze mille cas possibles qui casseraient le tout... c'est horriiiiible... -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let trips = [
+        "Roger 0 5 10",
+        "Pongo 3 7 14",
+        "Perdita 8 10 8",
+        "Anita 16 3 7",
+      ];
+
+      function parseTrip(trip) {
+        const tripArr = trip.split(" ");
+        const tripObj = {
+          client: tripArr[0],
+          start: Number(tripArr[1]),
+          duration: Number(tripArr[2]),
+          price: Number(tripArr[3]),
+        };
+        return tripObj;
+      }
+
+      function parseTrips(trips) {
+        const tripsArr = [];
+        for (trip of trips) {
+          tripsArr.push(parseTrip(trip));
+        }
+        return tripsArr;
+      }
+
+      function getTripsPrice(tripsList) {
+        let priceSum = 0;
+        for (trip of tripsList) {
+          priceSum += trip.price;
+        }
+        return priceSum;
+      }
+
+      function checkCompatibility(tripA, tripB) {
+        return tripA.start + tripA.duration <= tripB.start;
+      }
+
+      function findCompatibilities(trips) {
+        const compatibilitiesArray = [];
+        for (trip of trips) {
+          const uniqueTrip = [];
+          uniqueTrip.push(trip);
+          compatibilitiesArray.push(uniqueTrip);
+          for (t of trips) {
+            if (checkCompatibility(trip, t)) {
+              const compatibleTrips = [];
+              compatibleTrips.push(trip);
+              compatibleTrips.push(t);
+              compatibilitiesArray.push(compatibleTrips);
+            }
+          }
+        }
+        return compatibilitiesArray;
+      }
+
+      function findBestPrice(trips) {
+        let bestPrice = 0;
+        let bestTrips;
+        for (arr of trips) {
+          if (getTripsPrice(arr) > bestPrice) {
+            bestPrice = getTripsPrice(arr);
+            bestTrips = arr;
+          }
+        }
+        if (bestTrips.length == 1) {
+          return `${bestTrips[0].client} will earn you ${bestPrice} gold coins`;
+        } else if (bestTrips.length == 2) {
+          return `Taking ${bestTrips[0].client} & ${bestTrips[1].client} will earn you ${bestPrice} gold coins`;
+        }
+      }
+
+      let combos = findCompatibilities([
+        { client: "Roger", start: 0, duration: 5, price: 10 },
+        { client: "Pongo", start: 3, duration: 7, price: 14 },
+        { client: "Perdita", start: 8, duration: 10, price: 8 },
+        { client: "Anita", start: 16, duration: 3, price: 7 },
+      ]);
+
+      console.log(findBestPrice(combos));
+    </script>
+  </body>
+</html>
